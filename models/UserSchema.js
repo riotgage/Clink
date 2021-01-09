@@ -39,7 +39,12 @@ const userSchema = new schema({
     },
     createdAt:{
         type:"Date"
-    }
+    },
+    likes:[{ 
+            type: mongoose.Schema.ObjectId,
+            ref:'Post'
+        }
+    ]
 
 },opts)
 

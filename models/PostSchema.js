@@ -12,9 +12,15 @@ const PostSchema = new schema({
     },
     postedBy:{
         type: mongoose.Schema.ObjectId,
-        ref:'User'
+        ref:'User',
+        required:true
     },
-    pinned:Boolean
+    pinned:Boolean,
+    likes:[{ 
+            type: mongoose.Schema.ObjectId,
+            ref:'User'
+        }
+    ]
 
 },opts)
 
