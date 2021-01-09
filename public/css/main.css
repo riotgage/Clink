@@ -5,8 +5,10 @@
     --spacing:15px;
     --blueLight:#9BD1F9;
     --greyText:rgb(101,119,134);
-    --red:rgb(226,34,94);
+    --red:rgb(240, 52, 112);
+    --redBackground:rgb(226,34,94);
     --green:rgb(64,215,115);
+    --greenBackground:rgba(56, 211, 107);
     --greyButtonText:rgba(0,0,0,0.34);
 }
 
@@ -189,6 +191,22 @@ nav a:hover {
     color: var(--red);
 }
 
+.postButtonContainer.red button:hover{
+    color: var(--redBackground);
+
+}
+
 .postButtonContainer.green button.active{
-    color: var(--red);
+    color: var(--green);
+}
+
+.postButtonContainer.green button:hover{
+    color: var(--greenBackground);
+
+}
+
+.postActionContainer{
+    padding-left: 35px;
+    font-size:13px;
+    color: var(--greyText);
 }

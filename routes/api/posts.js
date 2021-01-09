@@ -8,8 +8,10 @@ const {requireLogin}=require('../../middleware/protect')
 router.get("/", function(req, res){
     Post.find()
     .populate("postedBy")
+    .populate("retweetData")
     .sort({createdAt: -1})
-    .then((data)=>{
+    .then(async (data)=>{
+        data=await User.populate(data,{path:"retweetData.postedBy"})
         res.status(200).send(data);
     })
     .catch((err)=>{
@@ -75,5 +77,49 @@ router.put("/:id/like",async function(req, res){
     res.status(200).send(post);
 })
 
+router.post("/:id/retweet",async function(req, res){
+
+    var postId=req.params.id;
+    var userId=req.session.user._id;
+   
+    // Try and delete retweet
+     var deletedPost=await Post.findOneAndDelete({
+        postedBy:userId,
+        retweetData:postId
+     }).catch(error=>{
+         console.log(error);
+        return res.sendstatus(400);
+    })
+    var option =deletedPost!=null ? "$pull":"$addToSet";
+    var repost=deletedPost;
+
+    if(repost==null){
+        repost=await Post.create({
+            postedBy:userId,
+            retweetData:postId
+        }).catch(error=>{
+           console.log(error);
+           return res.sendstatus(400);
+       })
+    }
+
+    req.session.user=await User.findByIdAndUpdate(userId,{
+        [option]:{retweets:repost._id}
+    },{
+        new:true
+    }).catch(error=>{
+        return res.sendstatus(404);
+    })
+
+    var post=await Post.findByIdAndUpdate(postId,{
+        [option]:{retweetUsers:userId}
+    },{
+        new:true
+    }).catch(error=>{
+        return res.sendstatus(404);
+    })
+
+    res.status(200).send(post);
+})
 
 module.exports=router;

@@ -43,9 +43,11 @@ const userSchema = new schema({
     likes:[{ 
             type: mongoose.Schema.ObjectId,
             ref:'Post'
-        }
-    ]
-
+    }],
+    retweets:[{ 
+        type: mongoose.Schema.ObjectId,
+        ref:'Post'
+    }],
 },opts)
 
 //encrypt password

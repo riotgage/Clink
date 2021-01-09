@@ -20,7 +20,15 @@ const PostSchema = new schema({
             type: mongoose.Schema.ObjectId,
             ref:'User'
         }
-    ]
+    ],
+    retweetUsers:[{ 
+        type: mongoose.Schema.ObjectId,
+        ref:'User'
+    }],
+    retweetData:{ 
+        type: mongoose.Schema.ObjectId,
+        ref:'Post'
+    }
 
 },opts)
 
