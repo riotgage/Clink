@@ -44,7 +44,8 @@ app.use('/api/posts',postApiRoutes);
 app.get('/', requireLogin,function(req, res){
     let payload={
         title: 'Home',
-        userLoggedIn:req.session.user
+        userLoggedIn:req.session.user,
+        userLoggedInJS:JSON.stringify(req.session.user)
     }
     res.status(200).render("home",payload)
 })

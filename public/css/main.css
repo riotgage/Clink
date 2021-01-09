@@ -5,6 +5,8 @@
     --spacing:15px;
     --blueLight:#9BD1F9;
     --greyText:rgb(101,119,134);
+    --red:rgb(226,34,94);
+    --green:rgb(64,215,115);
     --greyButtonText:rgba(0,0,0,0.34);
 }
 
@@ -181,4 +183,12 @@ nav a:hover {
     background-color:#d4edff;
     color: var(--blue);
     border-radius:50%;
+}
+
+.postButtonContainer.red button.active{
+    color: var(--red);
+}
+
+.postButtonContainer.green button.active{
+    color: var(--red);
 }

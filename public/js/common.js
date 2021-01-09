@@ -39,6 +39,7 @@ function createPostHtml(postData){
     }
     var displayName=postedBy.FirstName+" "+postedBy.LastName;
     var timeStamp=timeDifference(new Date(),new Date(postData.createdAt));
+    var likeButtonActiveClass=postData.likes.includes(userLoggedIn._id)?"active":"";
     return `<div class="post" data-id='${postData._id}'>
                 <div class="mainContentContainer">
                     <div class="userImageContainer">
@@ -59,13 +60,13 @@ function createPostHtml(postData){
                                     <i class="far fa-comment"></i>
                                 </button>
                             </div>
-                            <div class="postButtonContainer">
-                                <button>
+                            <div class="postButtonContainer green">
+                                <button class="retweet">
                                     <i class="fas fa-retweet"></i>
                                 </button>
                             </div>
-                            <div class="postButtonContainer">
-                                <button class="likeButton">
+                            <div class="postButtonContainer red">
+                                <button class="likeButton ${likeButtonActiveClass}">
                                     <i class="far fa-heart"></i>
                                     <span>${postData.likes.length || ""}</span>
                                 </button>
@@ -88,7 +89,11 @@ $(document).on('click',".likeButton",(event)=>{
         url:`/api/posts/${postId}/like`,
         success: function (postData){
             button.find("span").text(postData.likes.length || "")
-            
+
+            if(postData.likes.includes(userLoggedIn._id)){
+                button.addClass("active");
+            }
+            else button.removeClass("active");
         }
     })
 })
